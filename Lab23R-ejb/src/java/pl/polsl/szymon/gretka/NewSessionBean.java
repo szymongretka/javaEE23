@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.polsl.szymon.gretka;
 
+import pl.polsl.szymon.gretka.entity.Car;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -13,7 +9,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Szymek
+ * @author Szymon Gretka
  */
 @Stateless
 @LocalBean
@@ -26,15 +22,12 @@ public class NewSessionBean {
         return parameter1 + parameter2;
     }
     
-    public List<Carr> getAllCars() {
-        Carr car1 = new Carr("brand", "model", "colour", 2000);
-        Carr car2 = new Carr("brand", "model", "colour", 2001);
-        em.persist(car1);
-        em.persist(car2);
+    public List<Car> getAllCars() {
         return em.createQuery("Select c From Car c").getResultList();
     }
     
+    public Car getCarById(Long id) {
+        return em.find(Car.class, id);
+    }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }

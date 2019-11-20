@@ -2,11 +2,27 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>NewServlet</servlet-name>
-        <servlet-class>pl.polsl.szymon.gretka.NewServlet</servlet-class>
+        <servlet-class>pl.polsl.szymon.gretka.servlet.NewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CarServlet</servlet-name>
+        <servlet-class>pl.polsl.szymon.gretka.servlet.CarServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CarshowroomServlet</servlet-name>
+        <servlet-class>pl.polsl.szymon.gretka.servlet.CarshowroomServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CarServlet</servlet-name>
+        <url-pattern>/CarServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CarshowroomServlet</servlet-name>
+        <url-pattern>/CarshowroomServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
