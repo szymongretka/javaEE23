@@ -2,21 +2,16 @@ package pl.polsl.szymon.gretka.servlet.carshowroom;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import pl.polsl.szymon.gretka.beans.CarService;
+import javax.servlet.http.HttpSession;
 import pl.polsl.szymon.gretka.beans.CarShowroomService;
-import pl.polsl.szymon.gretka.entity.Car;
 import pl.polsl.szymon.gretka.entity.CarShowroom;
 
 /**
@@ -29,14 +24,30 @@ public class EditCarshowroomServlet extends HttpServlet {
     @EJB
     CarShowroomService carShowroomService;
     
-    @EJB
-    private CarService carService;
-    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)   
            throws ServletException, IOException {  
         
         response.setContentType("text/html");  
-        PrintWriter out = response.getWriter();  
+        PrintWriter out = response.getWriter(); 
+        
+        HttpSession session = request.getSession();
+        Map<String, Integer> carShowroomCrudCounter = 
+                (Map) session.getAttribute("carShowroomCrudCounter");
+        
+        if(carShowroomCrudCounter == null || carShowroomCrudCounter.isEmpty()) {
+            carShowroomCrudCounter = new HashMap<>();
+            carShowroomCrudCounter.put("editCarshowroom", 1);
+            session.setAttribute("carShowroomCrudCounter", carShowroomCrudCounter);
+        } else {
+            if(carShowroomCrudCounter.containsKey("editCarshowroom")) {
+                Integer value = carShowroomCrudCounter.get("editCarshowroom");
+                value++;
+                carShowroomCrudCounter.put("editCarshowroom", value);
+            } else {
+                carShowroomCrudCounter.put("editCarshowroom", 1);
+            }   
+        }
+        
         out.println("<h1>Update Carshowroom</h1>");
         
         String carShowroomId = request.getParameter("id");  
@@ -50,12 +61,9 @@ public class EditCarshowroomServlet extends HttpServlet {
         out.print("<tr><td>Name:</td><td><input type='text' name='name' value='"+carShowroom.getName()+"'/></td></tr>");  
         out.print("<tr><td>City:</td><td><input type='text' name='city' value='"+carShowroom.getCity()+"'/></td></tr>");  
         out.print("<tr><td>Street:</td><td><input type='text' name='street' value='"+carShowroom.getStreet()+"'/></td></tr>");
-        out.print("<tr>Enter IDs of the cars which would you like to\"\n" +
-"                    + \" add and split them with the commas\"\n" +
-"                    + \" if you don't want to add any cars just leave it blank: "
-                + "\" : <input type='text' name='listOfIds'></tr>");
         out.print("<tr><td colspan='2'><input type='submit' value='Edit & Save '/></td></tr>");  
-        out.print("</table>");  
+        out.print("</table>");
+        out.println("<p>Edit operation counter: " + carShowroomCrudCounter.get("editCarshowroom") + "</p>");
         out.print("</form>");  
           
         out.close();  
@@ -73,8 +81,6 @@ public class EditCarshowroomServlet extends HttpServlet {
         String name = request.getParameter("name");
         String city = request.getParameter("city");
         String street = request.getParameter("street");
-        String listOfIds = request.getParameter("listOfIds");
-
 
         Map<String, String> errorMap = new HashMap<>();
 
@@ -96,19 +102,6 @@ public class EditCarshowroomServlet extends HttpServlet {
         
         CarShowroom editedCarShowroom = new CarShowroom(name, city, street);
 
-        Pattern p = Pattern.compile("\\d+");
-        Matcher m = p.matcher(listOfIds);
-        List<Car> cars = new ArrayList<>();
-
-        if (!listOfIds.isEmpty()) {
-            while (m.find()) {
-                Long carId = Long.valueOf(m.group());
-                Car car = carService.getCarById(carId);
-                cars.add(car);
-            }
-        }
-        
-        editedCarShowroom.setCars(cars);
         carShowroomService.updateCarShowroom(id, editedCarShowroom);
 
         response.sendRedirect("CarshowroomServlet");  

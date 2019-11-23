@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import pl.polsl.szymon.gretka.beans.CarService;
 import pl.polsl.szymon.gretka.entity.Car;
 
@@ -28,6 +29,26 @@ public class EditCarServlet extends HttpServlet {
         
         response.setContentType("text/html");  
         PrintWriter out=response.getWriter();  
+        
+        HttpSession session = request.getSession();
+        Map<String, Integer> carCrudCounter = 
+                (Map) session.getAttribute("carCrudCounter");
+        
+        if(carCrudCounter == null || carCrudCounter.isEmpty()) {
+            carCrudCounter = new HashMap<>();
+            carCrudCounter.put("edit", 1);
+            session.setAttribute("carCrudCounter", carCrudCounter);
+        } else {
+            if(carCrudCounter.containsKey("edit")) {
+                Integer value = carCrudCounter.get("edit");
+                value++;
+                carCrudCounter.put("edit", value);
+            } else {
+                carCrudCounter.put("edit", 1);
+            }   
+        }
+        
+        
         out.println("<h1>Update Car</h1>");  
         String carId = request.getParameter("id");  
         Long id = Long.parseLong(carId);
@@ -42,7 +63,8 @@ public class EditCarServlet extends HttpServlet {
         out.print("<tr><td>Email:</td><td><input type='text' name='colour' value='"+car.getColour()+"'/></td></tr>");  
         out.print("<tr><td>Email:</td><td><input type='text' name='year' value='"+car.getYear()+"'/></td></tr>"); 
         out.print("<tr><td colspan='2'><input type='submit' value='Edit & Save '/></td></tr>");  
-        out.print("</table>");  
+        out.print("</table>");
+        out.println("<p>Edit operation counter: " + carCrudCounter.get("edit") + "</p>");
         out.print("</form>");  
           
         out.close();  

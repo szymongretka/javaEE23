@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import pl.polsl.szymon.gretka.beans.CarService;
 import pl.polsl.szymon.gretka.entity.Car;
 
@@ -23,7 +24,6 @@ public class CarServlet extends HttpServlet {
 
     @EJB
     private CarService carService;
- 
     
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response)
@@ -31,6 +31,24 @@ public class CarServlet extends HttpServlet {
     {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
+        
+        HttpSession session = request.getSession();
+        Map<String, Integer> carCrudCounter = (Map) session.getAttribute("carCrudCounter");
+        
+        if(carCrudCounter == null || carCrudCounter.isEmpty()) {
+            carCrudCounter = new HashMap<>();
+            carCrudCounter.put("read", 1);
+            carCrudCounter.put("delete", 0);
+            session.setAttribute("carCrudCounter", carCrudCounter);
+        } else {
+            if(carCrudCounter.containsKey("read")) {
+                Integer value = carCrudCounter.get("read");
+                value++;
+                carCrudCounter.put("read", value);
+            } else {
+                carCrudCounter.put("read", 1);
+            }   
+        }
         
         List<Car> carList = carService.getAllCars();
 
@@ -49,7 +67,9 @@ public class CarServlet extends HttpServlet {
                  + "<td><a href='EditCarServlet?id="+car.getId()+"'>edit</a></td>"
                  + "<td><a href='DeleteCarServlet?id="+car.getId()+"'>delete</a></td></tr>");  
         }  
-        out.print("</table>");  
+        out.print("</table>");
+        out.println("<p>Read operation counter: " + carCrudCounter.get("read") + "</p>");
+        out.println("<p>Delete operation counter: " + carCrudCounter.get("delete") + "</p>");
         out.println("<h3>Enter new car here: </h3>");
         out.println("<form method='post' action='car'>");
         out.println("<p>Enter Model: <input type='text' name='model'></p>");
@@ -57,7 +77,7 @@ public class CarServlet extends HttpServlet {
         out.println("<p>Enter Brand: <input type='text' name='brand'></p>");
         out.println("<p>Enter Year: <input type='text' name='year'></p>");
         out.println("<p><input type='submit' value='submit'></p>");
-        out.println("<a href='CarshowroomServlet'>CarShowroom servlet</a>");
+        out.println("<a href='CarshowroomServlet'>Carshowroom servlet</a>");
         out.println("</form>");
         out.println("</body>");
         out.println("</html>");
@@ -100,9 +120,27 @@ public class CarServlet extends HttpServlet {
 
         Car createdCar = new Car(brand, colour, model, year);
         carService.createCar(createdCar);
+        
+        HttpSession session = request.getSession();
+        Map<String, Integer> carCrudCounter = (Map) session.getAttribute("carCrudCounter");
+        
+        if(carCrudCounter == null || carCrudCounter.isEmpty()) {
+            carCrudCounter = new HashMap<>();
+            carCrudCounter.put("create", 1);
+            session.setAttribute("carCrudCounter", carCrudCounter);
+        } else {
+            if(carCrudCounter.containsKey("create")) {
+                Integer value = carCrudCounter.get("create");
+                value++;
+                carCrudCounter.put("create", value);
+            } else {
+                carCrudCounter.put("create", 1);
+            }   
+        }
 
         out.println("<html><head><title>Car</title></head><body>");
         out.println("<p>New car: " + createdCar.toString() + ".</p>");
+        out.println("<p>Create operation counter: " + carCrudCounter.get("create") + "</p>");
         out.println("<a href='CarServlet'>Car servlet</a>");
         out.println("</body></html>");
 
