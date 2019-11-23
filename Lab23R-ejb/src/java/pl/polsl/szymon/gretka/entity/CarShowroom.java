@@ -132,11 +132,8 @@ public class CarShowroom implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        hash = 23 * hash + Objects.hashCode(this.name);
-        hash = 23 * hash + Objects.hashCode(this.city);
-        hash = 23 * hash + Objects.hashCode(this.street);
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -152,24 +149,17 @@ public class CarShowroom implements Serializable {
             return false;
         }
         final CarShowroom other = (CarShowroom) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.city, other.city)) {
-            return false;
-        }
-        if (!Objects.equals(this.street, other.street)) {
-            return false;
-        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
 
+   
+
     @Override
     public String toString() {
-        return "CarShowroom{" + "id=" + id + ", name=" + name + ", city=" 
+        return id + ". " +"name=" + name + ", city=" 
                 + city + ", street=" + street + '}';
     }
     

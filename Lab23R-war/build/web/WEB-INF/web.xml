@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>NewServlet</servlet-name>
-        <servlet-class>pl.polsl.szymon.gretka.servlet.NewServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CarServlet</servlet-name>
-        <servlet-class>pl.polsl.szymon.gretka.servlet.CarServlet</servlet-class>
+        <servlet-class>pl.polsl.szymon.gretka.servlet.car.CarServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CarshowroomServlet</servlet-name>
-        <servlet-class>pl.polsl.szymon.gretka.servlet.CarshowroomServlet</servlet-class>
+        <servlet-class>pl.polsl.szymon.gretka.servlet.carshowroom.CarshowroomServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>NewServlet</servlet-name>
-        <url-pattern>/NewServlet</url-pattern>
-    </servlet-mapping>
+    <servlet>
+        <servlet-name>ErrorServlet</servlet-name>
+        <servlet-class>pl.polsl.szymon.gretka.servlet.ErrorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditCarServlet</servlet-name>
+        <servlet-class>pl.polsl.szymon.gretka.servlet.car.EditCarServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteCarServlet</servlet-name>
+        <servlet-class>pl.polsl.szymon.gretka.servlet.car.DeleteCarServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditCarshowroomServlet</servlet-name>
+        <servlet-class>pl.polsl.szymon.gretka.servlet.carshowroom.EditCarshowroomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteCarshowroomServlet</servlet-name>
+        <servlet-class>pl.polsl.szymon.gretka.servlet.carshowroom.DeleteCarshowroomServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CarServlet</servlet-name>
         <url-pattern>/CarServlet</url-pattern>
@@ -23,6 +35,26 @@
     <servlet-mapping>
         <servlet-name>CarshowroomServlet</servlet-name>
         <url-pattern>/CarshowroomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ErrorServlet</servlet-name>
+        <url-pattern>/ErrorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditCarServlet</servlet-name>
+        <url-pattern>/EditCarServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCarServlet</servlet-name>
+        <url-pattern>/DeleteCarServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditCarshowroomServlet</servlet-name>
+        <url-pattern>/EditCarshowroomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCarshowroomServlet</servlet-name>
+        <url-pattern>/DeleteCarshowroomServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,7 +5,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import pl.polsl.szymon.gretka.entity.CarShowroom;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-11-20T22:44:08")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2019-11-22T23:24:14")
 @StaticMetamodel(Car.class)
 public class Car_ { 
 

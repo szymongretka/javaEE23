@@ -30,7 +30,7 @@ public class CarShowroomService {
         return em.createQuery("Select c From CarShowroom c").getResultList();
     }
     
-    public void updateCar(Long id, CarShowroom carShowroom) {
+    public void updateCarShowroom(Long id, CarShowroom carShowroom) {
         CarShowroom carshowroomToUpdate = em.find(CarShowroom.class, id);
         carshowroomToUpdate.setName(carShowroom.getName());
         carshowroomToUpdate.setStreet(carShowroom.getStreet());
