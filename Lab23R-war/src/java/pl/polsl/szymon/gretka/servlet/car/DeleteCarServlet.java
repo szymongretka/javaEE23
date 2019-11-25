@@ -12,8 +12,10 @@ import javax.servlet.http.HttpSession;
 import pl.polsl.szymon.gretka.beans.CarService;
 
 /**
- *
- * @author Szymek
+ * Car servlet used for Delete operation
+ * 
+ * @author Szymon Gretka
+ * @version 1.0
  */
 public class DeleteCarServlet extends HttpServlet {
 

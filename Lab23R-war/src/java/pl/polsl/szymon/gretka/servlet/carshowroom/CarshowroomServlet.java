@@ -16,8 +16,10 @@ import pl.polsl.szymon.gretka.beans.CarShowroomService;
 import pl.polsl.szymon.gretka.entity.CarShowroom;
 
 /**
- *
- * @author Szymek
+ * Carshowroom servlet used for Read and Create operation
+ * 
+ * @author Szymon Gretka
+ * @version 1.0
  */
 @WebServlet("/carShowroom")
 public class CarshowroomServlet extends HttpServlet {

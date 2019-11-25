@@ -18,6 +18,7 @@ import javax.persistence.Table;
  * Car is an entity class which is being used for CRUD operations
  * 
  * @author Szymon Gretka
+ * @version 1.0
  */
 @Entity
 @Table(name = "car")

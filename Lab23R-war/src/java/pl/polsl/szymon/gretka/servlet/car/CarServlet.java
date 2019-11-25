@@ -16,8 +16,10 @@ import pl.polsl.szymon.gretka.beans.CarService;
 import pl.polsl.szymon.gretka.entity.Car;
 
 /**
- *
+ * Car servlet used for Read and Create operation
+ * 
  * @author Szymon Gretka
+ * @version 1.0
  */
 @WebServlet("/car")
 public class CarServlet extends HttpServlet {

@@ -18,6 +18,7 @@ import javax.persistence.Table;
 /**
  *
  * @author Szymon Gretka
+ * @version 1.0
  */
 @Entity
 @Table(name = "carshowroom")
